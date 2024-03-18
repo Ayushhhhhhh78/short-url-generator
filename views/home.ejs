@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <title>URL shortner</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+            *{
+                margin:0;padding:0;
+                box-sizing:border-box;
+                font-family: "Poppins", sans-serif;
+                font-weight: 800;
+                font-style: normal;
+                color:#FFF
+            }
+            body{
+                height:100vh;
+                width:100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                background-color: #34495e;
+                text-align: center;
+            }
+            h1{
+                font-size:50px;
+            }
+            input{
+                padding:10px;
+            }
+            input[type="text"]{
+                /* border:3px solid #FFF; */
+                border: 3px solid rgb(255,255,255);
+                background-color: #bdc3c7;
+                outline:3px solid rgb(255,255,255);
+                border-radius:7px;
+                -webkit-transition: 0.5s;
+                transition: 0.15s;
+            }
+            input[type='text']:focus{
+                border:3px solid green;
+                outline:3px solid green;
+            }
+            input[type="submit"]{
+                background-color: transparent;
+                cursor: pointer;
+                font-weight: bold;
+                font-size:100%;
+                border:2px solid #FFF;
+                border-radius:10px;
+                -webkit-transition: 0.1s;
+                transition: 0.1s;
+            }
+            input[type="submit"]:hover{
+                opacity:0.8;
+                border:2px solid green;
+            }
+            #analytics{
+                font-weight: 500;
+            }
+            #analytics:hover{
+                opacity:0.8
+            }
+            #shorturl{
+                background-color:#000;
+                padding:5px;
+                border-radius:6px;
+            }
+            #copy:hover{
+                cursor: pointer;
+                opacity: 0.8;
+            }
+        </style>
+    </head>
+    <body>
+        <%-include('./common.ejs')%>
+        <h1>URL shortner</h1><br>
+        <form method="POST" action="/url">
+            <input type="text" placeholder="https://example.com" name="url" style="color:#000">
+            <input type="submit">
+        </form>
+        <%if(page == 0){%>
+            <p style="font-style:italic;font-size:15px;color:grey">Enter Url Here</p>
+        <%}else{%>
+            <hr>
+            <br>
+            <p>Here is the new URL : <a id="shorturl" class="url" href="http://localhost:<%=port%>/go/<%=newURL%>">localhost:<%=port%>/go/<%=newURL%></a><button id="copy" style="color:#000; border-radius: 30%;padding:3px;margin-left:5px">COPY</button></p>
+        <%}%>
+        <br>
+        or
+        <br>
+        <a id="analytics" href="http://localhost:<%=port%>/analytics" style="color:rgb(0,255,0)">See Url Analytics</a>
+    </body>
+
+    <script>
+        document.getElementById('copy').addEventListener('click', () => {
+            navigator.clipboard.writeText(
+                document.getElementById('shorturl').innerHTML
+            )
+            alert('copied!')
+        })
+
+        document.getElementById('close').addEventListener('click', () => {
+            document.getElementById('common').style.display = 'none'
+        })
+    </script>
+</html>
